@@ -11,12 +11,12 @@ class Input
 
   def get_input
     user_input = gets
-    user_input = user_input.chomp unless user_input.nil?
+    user_input = user_input.chomp.strip unless user_input.nil?
     parsed_input = parse_input(user_input)
     command = CMDS[parsed_input.first]
   end
 
   def parse_input(input)
-    input.split(/\s/)
+    input.split(/\s+/)
   end
 end

@@ -2,12 +2,8 @@
 
 require_relative './cmd'
 
-class Input
+class UserInput
   include CMD
-
-  def initalize
-    @options = ['table1', 'table2']
-  end
 
   def get_input
     user_input = gets

@@ -1,4 +1,4 @@
-require_relative './input'
+require_relative './userinput'
 
-input = Input.new
+input = UserInput.new
 input.get_input

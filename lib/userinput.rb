@@ -2,22 +2,16 @@
 
 require_relative './cmd'
 
-class UserInput
-  include CMD
-
+module UserInput
   def get_input
     user_input = gets
-    user_input = user_input.chomp.strip unless user_input.nil?
-    parsed_input = parse_input(user_input)
-    command = CMDS[parsed_input.shift]
-    parse_params(command, parsed_input)
+    unless user_input.nil?
+      user_input = user_input.chomp.strip
+      parse_input(user_input)
+    end
   end
 
   def parse_input(input)
-    input.split(/\s+/)
-  end
-
-  def parse_params(*params)
-    params.flatten.reject(&:nil?)
+    input.split(/[\s]+/).reject(&:empty?).grep_v(/([a-zA-Z][0-9])|([0-9][a-zA-Z])|[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
   end
 end

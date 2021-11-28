@@ -1,4 +1,9 @@
 require_relative './userinput'
+require_relative './response'
+require_relative './room'
+require_relative './worldobject'
+require_relative './item'
+require_relative './game'
 
-input = UserInput.new
-input.get_input
+game = Game.new
+game.play

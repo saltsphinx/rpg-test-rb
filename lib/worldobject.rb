@@ -1,18 +1,17 @@
 # frozen-string-literal: true
+require_relative './models'
 
-class WorldObject
-  attr_reader :name
-
-  def initialize(name)
-    @name = name
+class WorldObject < ItemBase
+  def initialize(name, description = nil)
+    super(name, description)
   end
 end
 
-class Container < WorldObject
-  attr_reader :storage
+class ContainerObject < WorldObject
+  include Storage
   
-  def initialize(storage, name)
-    super(name)
+  def initialize(storage = [], name = nil, description = nil)
+    super(name, description)
     @storage =  storage
   end
 end

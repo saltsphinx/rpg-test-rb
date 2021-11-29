@@ -12,6 +12,6 @@ module UserInput
   end
 
   def parse_input(input)
-    input.split(/[\s]+/).reject(&:empty?).grep_v(/([a-zA-Z][0-9])|([0-9][a-zA-Z])|[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
+    input.split(/[\s]+/).reject(&:empty?) #.grep_v(/([a-zA-Z][0-9])|([0-9][a-zA-Z])|[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
   end
 end

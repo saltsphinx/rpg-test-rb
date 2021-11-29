@@ -3,8 +3,14 @@
 class Room
   attr_reader :floor
 
-  def initialize(description, floor = [])
+  def initialize(floor = [], name = '', description = nil)
     @floor = floor
-    @description = description
+    @name = name
+    @description = description || name
+  end
+
+  def description
+    puts @description
+    puts "Nearby: #{floor.map(&:name).join(', ')}"
   end
 end

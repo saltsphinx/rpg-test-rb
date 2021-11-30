@@ -42,14 +42,18 @@ module Response
     container = get_instance params.pop
     return if container.nil?
     item = params.shift
-    puts 151
 
-    if params.size > 0
+    if params.size > 0 # Checks all remaining containers, swapping container variable if object is a container is in within container
       params.reverse_each do |object|
         object_instance = get_instance(object, container)
         return puts "#{object} isn't a container" unless object_instance.class.method_defined?(:storage)
         #container = object_instance if container.storage.map(&:name).include?(object)
-        container.storage.map(&:name).include?(object) ? container = object_instance : break
+
+        if container.storage.find { |storage_object| storage_object.name == object || object.include?(storage_object.name[0..(storage_object.name.size*CONFIG[:partial_match_percentage])-1]) }
+          container = object_instance
+        else
+         return puts("Container #{object} not in #{container.name}")
+        end
       end
     end
     
@@ -65,11 +69,10 @@ module Response
   end
 
   def get_instance(name, container = floor)
-    match_percent = CONFIG[:partial_match_percentage]
     if container.is_a? Array
-      container.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*match_percent)-1]) }
+      container.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
     else
-      container.storage.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*match_percent)-1]) }
+      container.storage.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
     end
   end
 

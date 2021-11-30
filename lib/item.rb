@@ -2,7 +2,7 @@
 require_relative './models'
 
 class Item < ItemBase
-  def initialize(name, description = nil)
+  def initialize(name, description = nil, weight = 0)
     super(name, description)
   end
 end

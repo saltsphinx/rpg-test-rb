@@ -25,7 +25,7 @@ module Response
         item = search_container(params)
       end
   
-      return item ? item.description : puts("That item isn't there.")
+      return item ? item.raw_description : puts("That item isn't there.")
     end
 
     puts 'Bad input'
@@ -36,6 +36,18 @@ module Response
 
   def grab(params)
     params, quantity = check_quantity params
+
+    return if verify_params params
+
+    item, container = (params.one? ? get_instance(params.first) : search_container(params))
+
+    @player.manage_inventory(item)
+    container.delete item
+    @player.inventory
+  end
+
+  def verify_params(params)
+    params.any? { |i| i.match?(/^\d+/)}
   end
 
   def search_container(params)
@@ -57,7 +69,7 @@ module Response
       end
     end
     
-    get_instance(item, container) 
+    return get_instance(item, container)
   end
 
   def check_quantity(params)
@@ -70,10 +82,11 @@ module Response
 
   def get_instance(name, container = floor)
     if container.is_a? Array
-      container.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
+      object = container.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
     else
-      container.storage.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
+      object = container.storage.find { |object| object.name == name || name.include?(object.name[0..(object.name.size*CONFIG[:partial_match_percentage])-1]) }
     end
+    return object, container
   end
 
   def inspect_room

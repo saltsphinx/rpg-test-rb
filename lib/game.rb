@@ -12,7 +12,7 @@ class Game
   include Settings
 
   def initialize
-    @player = nil
+    @player = Player.new
     @room = nil
   end
 

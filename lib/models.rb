@@ -1,10 +1,15 @@
 
 class ItemBase
-  attr_reader :name
+  attr_reader :name, :weight
 
-  def initialize(name, description = nil)
+  def initialize(name, description = '', weight = 0)
     @name = name
-    @description = description || name
+    @description = description
+    @weight = weight
+  end
+
+  def raw_description
+    @description
   end
 
   def description

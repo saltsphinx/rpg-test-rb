@@ -15,6 +15,13 @@ class Player
       @inventory << item
     end
   end
+
+  def inventory
+    @inventory.each do |item|
+      text = "name: #{item.name}\tthirds: #{item.weight}\tdescription: #{item.raw_description[0..35].strip}"
+      puts text
+    end
+  end
 end
 
 # strength: carry amount, strength actions, melee damage bonus
